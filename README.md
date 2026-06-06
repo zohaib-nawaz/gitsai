@@ -1,36 +1,124 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GitSearch AI — Open Source Discovery
+
+Describe what you want to build in natural language. GitSearch AI extracts search intent, queries GitHub, analyzes repositories with AI (OpenAI or Gemini), and returns ranked recommendations.
+
+## Features
+
+- Natural language project descriptions
+- AI-generated GitHub search keywords
+- Repository discovery via GitHub Search API
+- README-aware relevance scoring
+- Ranked results with match scores, technologies, strengths, and gaps
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- **OpenAI** or **Google Gemini** API key
+- [GitHub personal access token](https://github.com/settings/tokens) (recommended)
+
+### Setup
 
 ```bash
+cp .env.example .env.local
+# Edit .env.local with your API keys
+
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `AI_PROVIDER` | With `AI_API_KEY` | `openai` or `gemini` |
+| `AI_API_KEY` | With `AI_PROVIDER` | Unified API key for chosen provider |
+| `GEMINI_API_KEY` | One of these | Gemini key (auto-selects Gemini) |
+| `OPENAI_API_KEY` | One of these | OpenAI key (auto-selects OpenAI) |
+| `AI_MODEL` | No | Model override (default: `gemini-2.0-flash` or `gpt-4o-mini`) |
+| `GITHUB_TOKEN` | No | GitHub PAT for higher API rate limits |
 
-## Learn More
+**Gemini example (`.env.local`):**
+```env
+AI_PROVIDER=gemini
+AI_API_KEY=your-gemini-api-key
+```
 
-To learn more about Next.js, take a look at the following resources:
+**OpenAI example:**
+```env
+AI_PROVIDER=openai
+AI_API_KEY=sk-your-openai-api-key
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Or set only `GEMINI_API_KEY` / `OPENAI_API_KEY` — provider is auto-detected.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Architecture
 
-## Deploy on Vercel
+```
+User Query → API Route → Search Orchestrator
+                              ├── AI (OpenAI/Gemini): extract keywords
+                              ├── GitHub: search repositories
+                              ├── GitHub: fetch READMEs
+                              └── AI (OpenAI/Gemini): evaluate & rank
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Folder Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+app/                  # Next.js App Router pages & API routes
+components/           # Presentational UI components
+features/search/      # Feature-specific hooks
+services/             # GitHub, OpenAI, and search orchestration
+types/                # Shared TypeScript types
+lib/                  # Env, errors, constants
+utils/                # Validation, dates, formatting
+```
+
+## API
+
+### `POST /api/search`
+
+**Request:**
+```json
+{ "query": "I need a multi-tenant SaaS starter using Next.js, Stripe and Supabase." }
+```
+
+**Response:**
+```json
+{
+  "query": "...",
+  "keywords": ["nextjs saas starter", "..."],
+  "repositories": [
+    {
+      "fullName": "owner/repo",
+      "name": "repo",
+      "htmlUrl": "https://github.com/owner/repo",
+      "matchScore": 94,
+      "technologiesDetected": ["Next.js", "Stripe"],
+      "strengths": ["Production-ready SaaS boilerplate"],
+      "stars": 8000,
+      "updatedAt": "2025-01-15T00:00:00Z"
+    }
+  ]
+}
+```
+
+## Database
+
+Not required for MVP. Search is stateless. Future options: cache search results (Redis), store search history (PostgreSQL), or pre-index popular repos.
+
+## Future Scalability
+
+- **Caching**: Redis cache for GitHub search + evaluation results (TTL by repo `updated_at`)
+- **Background jobs**: Queue long searches with BullMQ / Inngest
+- **Streaming**: SSE progress updates (keywords → candidates → evaluations)
+- **Auth & quotas**: User accounts with per-tier rate limits
+- **Embeddings**: Vector search over README index for faster candidate retrieval
+- **Feedback loop**: Thumbs up/down to fine-tune ranking
+
+## License
+
+MIT

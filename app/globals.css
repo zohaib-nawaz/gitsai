@@ -1,26 +1,287 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafafe;
+  --foreground: #1e185b;
+
+  /* Reference palette */
+  --brand-primary: #1e185b;
+  --brand-primary-light: #2d2470;
+  --brand-primary-dark: #151045;
+  --brand-secondary: #d9d9d9;
+  --brand-muted: #6b7280;
+  --brand-surface: #ffffff;
+  --brand-bg: #f5f3ff;
+  --brand-bg-soft: #fafafe;
+  --brand-border: #e8e5f5;
+  --brand-accent: #ebe8ff;
+
+  /* Reference gradients */
+  --gradient-hero: radial-gradient(
+    ellipse 90% 70% at 50% -10%,
+    #ffffff 0%,
+    #f5f3ff 42%,
+    #ebe8ff 100%
+  );
+  --gradient-page: radial-gradient(
+    ellipse 120% 80% at 50% 0%,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(245, 243, 255, 0.85) 45%,
+    rgba(235, 232, 255, 0.5) 100%
+  );
+  --gradient-button: linear-gradient(
+    180deg,
+    #2a2170 0%,
+    var(--brand-primary) 55%,
+    var(--brand-primary-dark) 100%
+  );
+  --gradient-cta: linear-gradient(
+    135deg,
+    var(--brand-primary-dark) 0%,
+    var(--brand-primary) 45%,
+    #3d3190 100%
+  );
+  --gradient-text: linear-gradient(
+    135deg,
+    var(--brand-primary) 0%,
+    #4c3d9a 55%,
+    #6b5bb5 100%
+  );
+  --gradient-mesh: radial-gradient(
+      ellipse 60% 50% at 15% 20%,
+      rgba(107, 91, 181, 0.18) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 50% 45% at 85% 15%,
+      rgba(30, 24, 91, 0.12) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 70% 60% at 50% 80%,
+      rgba(235, 232, 255, 0.9) 0%,
+      transparent 60%
+    );
+  --gradient-section: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(245, 243, 255, 0.9) 50%,
+    rgba(255, 255, 255, 0.6) 100%
+  );
+  --gradient-section-alt: linear-gradient(
+    135deg,
+    #f5f3ff 0%,
+    #ebe8ff 40%,
+    #f5f3ff 100%
+  );
+  --gradient-card: linear-gradient(
+    145deg,
+    #ffffff 0%,
+    #fafafe 45%,
+    #f5f3ff 100%
+  );
+  --gradient-icon: linear-gradient(
+    135deg,
+    #ebe8ff 0%,
+    #d4ceff 50%,
+    #ebe8ff 100%
+  );
+  --gradient-icon-active: linear-gradient(
+    135deg,
+    #2d2470 0%,
+    var(--brand-primary) 50%,
+    #3d3190 100%
+  );
+  --gradient-border: linear-gradient(
+    135deg,
+    rgba(30, 24, 91, 0.35) 0%,
+    rgba(107, 91, 181, 0.25) 50%,
+    rgba(217, 217, 217, 0.5) 100%
+  );
+  --gradient-badge: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(245, 243, 255, 0.95) 100%
+  );
+  --gradient-header: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.92) 0%,
+    rgba(245, 243, 255, 0.85) 100%
+  );
+  --shadow-card: 0 4px 24px rgba(30, 24, 91, 0.08);
+  --shadow-card-lg: 0 12px 48px rgba(30, 24, 91, 0.12);
+  --shadow-button: 0 4px 14px rgba(30, 24, 91, 0.25);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-brand: var(--brand-primary);
+  --color-brand-light: var(--brand-primary-light);
+  --color-brand-dark: var(--brand-primary-dark);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-muted: var(--brand-muted);
+  --color-brand-surface: var(--brand-surface);
+  --color-brand-bg: var(--brand-bg);
+  --color-brand-bg-soft: var(--brand-bg-soft);
+  --color-brand-border: var(--brand-border);
+  --color-brand-accent: var(--brand-accent);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #0f0d1f;
     --foreground: #ededed;
+    --brand-bg: #1a1730;
+    --brand-bg-soft: #12101f;
+    --brand-border: #2a2545;
+    --brand-accent: #221e3d;
+    --brand-surface: #1a1730;
+    --gradient-hero: radial-gradient(
+      ellipse 90% 70% at 50% -10%,
+      #1a1730 0%,
+      #15122a 42%,
+      #0f0d1f 100%
+    );
+    --gradient-page: radial-gradient(
+      ellipse 120% 80% at 50% 0%,
+      rgba(26, 23, 48, 0.95) 0%,
+      rgba(21, 18, 42, 0.85) 45%,
+      rgba(15, 13, 31, 0.5) 100%
+    );
+    --gradient-mesh: radial-gradient(
+        ellipse 60% 50% at 15% 20%,
+        rgba(107, 91, 181, 0.15) 0%,
+        transparent 55%
+      ),
+      radial-gradient(
+        ellipse 50% 45% at 85% 15%,
+        rgba(45, 36, 112, 0.2) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 70% 60% at 50% 80%,
+        rgba(26, 23, 48, 0.8) 0%,
+        transparent 60%
+      );
+    --gradient-section: linear-gradient(
+      180deg,
+      rgba(26, 23, 48, 0.4) 0%,
+      rgba(21, 18, 42, 0.7) 50%,
+      rgba(26, 23, 48, 0.4) 100%
+    );
+    --gradient-section-alt: linear-gradient(
+      135deg,
+      #1a1730 0%,
+      #221e3d 40%,
+      #1a1730 100%
+    );
+    --gradient-card: linear-gradient(
+      145deg,
+      #1a1730 0%,
+      #15122a 45%,
+      #1a1730 100%
+    );
+    --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3);
+    --shadow-card-lg: 0 12px 48px rgba(0, 0, 0, 0.4);
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+.bg-hero-gradient {
+  background: var(--gradient-hero);
+}
+
+.bg-page-gradient {
+  background: var(--gradient-page);
+}
+
+.bg-brand-gradient {
+  background: var(--gradient-button);
+}
+
+.bg-cta-gradient {
+  background: var(--gradient-cta);
+}
+
+.bg-mesh-gradient {
+  background: var(--gradient-mesh);
+}
+
+.bg-section-gradient {
+  background: var(--gradient-section);
+}
+
+.bg-section-alt-gradient {
+  background: var(--gradient-section-alt);
+}
+
+.bg-card-gradient {
+  background: var(--gradient-card);
+}
+
+.bg-icon-gradient {
+  background: var(--gradient-icon);
+}
+
+.bg-icon-gradient-active {
+  background: var(--gradient-icon-active);
+}
+
+.bg-header-gradient {
+  background: var(--gradient-header);
+}
+
+.bg-badge-gradient {
+  background: var(--gradient-badge);
+}
+
+.gradient-border {
+  background: var(--gradient-border);
+  padding: 1px;
+}
+
+.gradient-border-inner {
+  background: var(--gradient-card);
+  border-radius: inherit;
+}
+
+.gradient-text {
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.card-float {
+  box-shadow: var(--shadow-card);
+}
+
+.card-float-lg {
+  box-shadow: var(--shadow-card-lg);
+}
+
+.btn-brand {
+  background: var(--gradient-button);
+  box-shadow: var(--shadow-button);
+  color: #ffffff;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.btn-brand:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(30, 24, 91, 0.35);
+}
+
+.btn-brand:active {
+  transform: translateY(0);
 }
