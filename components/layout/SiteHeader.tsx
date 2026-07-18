@@ -31,7 +31,7 @@ export function SiteHeader() {
         </nav>
 
         <Link
-          href="/#search"
+          href="/search"
           className="btn-brand shrink-0 rounded-full px-5 py-2 text-sm font-semibold"
         >
           Get started

@@ -33,7 +33,7 @@ export function CtaSection() {
               open-source options on GitHub.
             </p>
             <Link
-              href="#search"
+              href="/search"
               className="mt-10 inline-flex items-center justify-center rounded-full bg-badge-gradient px-8 py-3.5 text-sm font-semibold text-brand shadow-lg transition-transform hover:scale-[1.02]"
             >
               Start searching

@@ -53,7 +53,7 @@ export default function HomePage() {
             </p>
 
             <Link
-              href="#search"
+              href="/search"
               className="btn-brand mt-7 inline-flex items-center justify-center rounded-full px-8 py-3.5 text-sm font-semibold sm:mt-8"
             >
               Get started for free
